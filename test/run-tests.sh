@@ -30,7 +30,7 @@ echo -e "\n${YELLOW}Starting container with custom init scripts...${NC}"
 docker run -d \
     --name "$CONTAINER_NAME" \
     -e POSTGRES_PASSWORD=testpassword \
-    -v "$TEST_DIR:/docker-entrypoint-initdb.d" \
+    -v "$TEST_DIR/init-scripts:/docker-entrypoint-initdb.d" \
     "$IMAGE_NAME"
 
 # Wait for PostgreSQL to be ready
@@ -64,15 +64,15 @@ run_test() {
 
     if [[ "$result" == *"$expected"* ]]; then
         echo -e "  ${GREEN}✓${NC} $name"
-        ((TESTS_PASSED++))
+        TESTS_PASSED=$((TESTS_PASSED + 1))
     else
         echo -e "  ${RED}✗${NC} $name (expected: $expected, got: $result)"
-        ((TESTS_FAILED++))
+        TESTS_FAILED=$((TESTS_FAILED + 1))
     fi
 }
 
 run_sql() {
-    docker exec "$CONTAINER_NAME" psql -U postgres -c "$1" > /dev/null 2>&1
+    docker exec "$CONTAINER_NAME" psql -U postgres -c "$1" > /dev/null 2>&1 || true
 }
 
 echo -e "\n${YELLOW}=== Extension Installation Tests ===${NC}"
@@ -182,7 +182,7 @@ run_sql "CREATE TABLE IF NOT EXISTS audit_log (
 run_sql "SELECT partman.create_parent(
     p_parent_table := 'public.audit_log',
     p_control := 'created_at',
-    p_interval := 'daily',
+    p_interval := '1 day',
     p_premake := 3
 );"
 

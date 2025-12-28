@@ -94,7 +94,7 @@ CREATE TABLE audit_log (
 SELECT partman.create_parent(
   p_parent_table := 'public.audit_log',
   p_control := 'created_at',
-  p_interval := 'daily',
+  p_interval := '1 day',
   p_premake := 7
 );
 
@@ -365,8 +365,8 @@ This repository includes a GitHub Action that automatically builds and publishes
 ## Versions
 
 - PostgreSQL: 18 (bookworm)
-- TimescaleDB: 2.24.0
-- pg_partman: 5.2.4
+- TimescaleDB: latest from [TimescaleDB apt repository](https://packagecloud.io/timescale/timescaledb)
+- pg_partman: latest from [PGDG apt repository](https://apt.postgresql.org/)
 
 ## License
 

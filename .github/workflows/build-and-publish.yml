@@ -91,9 +91,6 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:scan
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            TIMESCALEDB_VERSION=2.24.0
-            PARTMAN_VERSION=5.2.4
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
@@ -128,9 +125,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            TIMESCALEDB_VERSION=2.24.0
-            PARTMAN_VERSION=5.2.4
 
       - name: Generate build summary
         run: |
@@ -186,8 +180,8 @@ jobs:
 
             ### Versions
             - PostgreSQL: 18
-            - TimescaleDB: 2.23.0
-            - pg_partman: 5.2.4
+            - TimescaleDB: latest from TimescaleDB apt repo
+            - pg_partman: latest from PGDG apt repo
 
             ### Security
             - Container scanned with Trivy for vulnerabilities

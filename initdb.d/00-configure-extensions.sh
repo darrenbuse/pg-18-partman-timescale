@@ -1,16 +1,13 @@
 #!/bin/bash
 set -e
 
-# Configure shared_preload_libraries for TimescaleDB and pg_partman BGW
-# This runs before PostgreSQL starts for the first time
+# Configure extension settings for TimescaleDB and pg_partman BGW
+# Note: shared_preload_libraries is set via CMD in Dockerfile (must be at server start)
 
 # Write static configuration (using quoted heredoc to prevent expansion)
 cat >> "${PGDATA}/postgresql.conf" <<'STATIC_EOF'
 
 # pg-18-partman-timescale configuration
-# Extensions requiring shared_preload_libraries
-shared_preload_libraries = 'timescaledb,pg_partman_bgw,pg_stat_statements'
-
 # TimescaleDB settings
 timescaledb.telemetry_level = off
 

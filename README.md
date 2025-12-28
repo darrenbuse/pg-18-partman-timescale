@@ -1,5 +1,9 @@
 # pg-18-partman-timescale
 
+[![Build and Publish](https://github.com/darrenbuse/pg-18-partman-timescale/actions/workflows/build-and-publish.yml/badge.svg)](https://github.com/darrenbuse/pg-18-partman-timescale/actions/workflows/build-and-publish.yml)
+[![GitHub release](https://img.shields.io/github/v/release/darrenbuse/pg-18-partman-timescale)](https://github.com/darrenbuse/pg-18-partman-timescale/releases)
+[![License](https://img.shields.io/github/license/darrenbuse/pg-18-partman-timescale)](LICENSE)
+
 PostgreSQL 18 container with TimescaleDB and pg_partman for time-series and partitioned data workloads.
 
 > **Note:** PostgreSQL 18 is currently in development. Consider using PostgreSQL 17 for production workloads until PostgreSQL 18 is officially released.
@@ -250,13 +254,13 @@ Additional security recommendations:
 ```yaml
 services:
   db:
-    build: .
+    image: ghcr.io/darrenbuse/pg-18-partman-timescale:latest
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: myapp
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./conf.d/custom.conf:/etc/postgresql/conf.d/custom.conf:ro
+      - ./custom.conf:/etc/postgresql/conf.d/custom.conf:ro
     ports:
       - "5432:5432"
     healthcheck:

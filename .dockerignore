@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+LICENSE
+*.md
+
+# Environment files
+.env
+.env.*
+
+# Docker Compose files (not needed in image)
+docker-compose*.yml
+
+# GitHub
+.github/
+
+# Secrets and credentials
+*.pem
+*.key
+*.crt
+secrets/
+credentials/
+*.password
+
+# Build artifacts
+*.log
+*.tmp
+.cache/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

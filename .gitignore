@@ -1,0 +1,23 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local configuration overrides
+conf.d/*.conf
+!conf.d/example.conf
+
+# Data directory (if testing locally)
+data/
+pgdata/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

@@ -50,15 +50,19 @@ RUN apt-get update \
         gnupg \
     && rm -rf /tmp/pg_partman /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Create configuration directory
-RUN mkdir -p /etc/postgresql/conf.d
+# Create directories
+RUN mkdir -p /etc/postgresql/conf.d /opt/pg-init
 
-# Copy initialization scripts with proper permissions
-COPY --chmod=755 ./initdb.d/*.sh /docker-entrypoint-initdb.d/
-COPY ./initdb.d/*.sql /docker-entrypoint-initdb.d/
+# Copy image init scripts to protected location (merged at runtime)
+# Users can mount their own scripts to /docker-entrypoint-initdb.d/
+COPY --chmod=755 ./initdb.d/*.sh /opt/pg-init/
+COPY ./initdb.d/*.sql /opt/pg-init/
 
 # Copy custom PostgreSQL configuration
 COPY ./conf.d/ /etc/postgresql/conf.d/
+
+# Copy entrypoint wrapper that merges image scripts with user scripts
+COPY --chmod=755 docker-entrypoint-wrapper.sh /usr/local/bin/
 
 # Expose PostgreSQL port
 EXPOSE 5432
@@ -69,3 +73,7 @@ STOPSIGNAL SIGINT
 # Health check with proper shell expansion
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD ["sh", "-c", "pg_isready -U \"${POSTGRES_USER:-postgres}\" -d \"${POSTGRES_DB:-postgres}\" -h localhost"]
+
+# Use wrapper entrypoint that merges init scripts
+ENTRYPOINT ["docker-entrypoint-wrapper.sh"]
+CMD ["postgres"]

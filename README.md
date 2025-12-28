@@ -117,6 +117,33 @@ The pg_partman background worker runs hourly by default to create new partitions
 | `POSTGRES_USER` | `postgres` | Superuser name |
 | `POSTGRES_DB` | `postgres` | Default database |
 
+### Custom Initialization Scripts
+
+Add your own init scripts that run alongside the image's built-in setup:
+
+```bash
+docker run -d \
+  --name pg-18-partman-timescale \
+  -e POSTGRES_PASSWORD=changeme \
+  -v ./my-init-scripts:/docker-entrypoint-initdb.d:ro \
+  -p 5432:5432 \
+  ghcr.io/darrenbuse/pg-18-partman-timescale:latest
+```
+
+**How it works:**
+- Image scripts (in `/opt/pg-init/`) are automatically merged with your mounted scripts
+- Image scripts use prefixes `00-` and `01-` to run first
+- Use prefixes like `10-`, `20-` for your scripts to control execution order
+
+Example project structure:
+```
+my-project/
+├── docker-compose.yml
+└── init-scripts/
+    ├── 10-create-users.sql      # Runs after image setup
+    └── 20-seed-data.sql         # Runs last
+```
+
 ### Custom Configuration
 
 Mount configuration files to `/etc/postgresql/conf.d/`:
@@ -258,6 +285,7 @@ services:
       POSTGRES_DB: myapp
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d:ro  # Custom init scripts
       - ./custom.conf:/etc/postgresql/conf.d/custom.conf:ro
     ports:
       - "5432:5432"
@@ -270,6 +298,14 @@ services:
 
 volumes:
   pgdata:
+```
+
+Example `init-scripts/10-setup-app.sql`:
+```sql
+-- Create application user with specific privileges
+CREATE USER myapp_user WITH PASSWORD 'secure_password';
+GRANT CONNECT ON DATABASE myapp TO myapp_user;
+ALTER USER myapp_user CREATEDB;
 ```
 
 ## Troubleshooting

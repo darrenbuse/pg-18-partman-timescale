@@ -30,7 +30,7 @@ echo -e "\n${YELLOW}Starting container with custom init scripts...${NC}"
 docker run -d \
     --name "$CONTAINER_NAME" \
     -e POSTGRES_PASSWORD=testpassword \
-    -v "$TEST_DIR:/docker-entrypoint-initdb.d:ro" \
+    -v "$TEST_DIR:/docker-entrypoint-initdb.d" \
     "$IMAGE_NAME"
 
 # Wait for PostgreSQL to be ready

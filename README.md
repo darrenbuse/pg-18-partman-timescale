@@ -10,7 +10,7 @@ PostgreSQL 18 container with TimescaleDB and pg_partman for time-series and part
 
 pg-18-partman-timescale provides a ready-to-use PostgreSQL 18 image layered with:
 
-- **TimescaleDB 2.23.0** — Hypertables with automatic time-based chunking, continuous aggregates, and compression for time-series data
+- **TimescaleDB 2.24.0** — Hypertables with automatic time-based chunking, continuous aggregates, and compression for time-series data
 - **pg_partman 5.2.4** — Automated partition management for tables that need lifecycle control outside of TimescaleDB's domain
 - **pg_stat_statements** — Query performance monitoring and analysis
 
@@ -365,7 +365,7 @@ This repository includes a GitHub Action that automatically builds and publishes
 ## Versions
 
 - PostgreSQL: 18 (bookworm)
-- TimescaleDB: 2.23.0
+- TimescaleDB: 2.24.0
 - pg_partman: 5.2.4
 
 ## License

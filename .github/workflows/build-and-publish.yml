@@ -92,7 +92,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            TIMESCALEDB_VERSION=2.23.0
+            TIMESCALEDB_VERSION=2.24.0
             PARTMAN_VERSION=5.2.4
 
       - name: Run Trivy vulnerability scanner
@@ -129,7 +129,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            TIMESCALEDB_VERSION=2.23.0
+            TIMESCALEDB_VERSION=2.24.0
             PARTMAN_VERSION=5.2.4
 
       - name: Generate build summary

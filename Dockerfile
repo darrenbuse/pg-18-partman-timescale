@@ -10,7 +10,7 @@ LABEL org.opencontainers.image.title="pg-18-partman-timescale"
 LABEL org.opencontainers.image.description="PostgreSQL 18 with TimescaleDB and pg_partman for time-series and partitioned data"
 
 # Build arguments for version pinning
-ARG TIMESCALEDB_VERSION=2.23.0
+ARG TIMESCALEDB_VERSION=2.24.0
 ARG PARTMAN_VERSION=5.2.4
 
 # Environment variables

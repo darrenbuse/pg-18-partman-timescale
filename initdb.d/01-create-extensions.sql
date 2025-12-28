@@ -46,8 +46,13 @@ GRANT EXECUTE ON ALL PROCEDURES IN SCHEMA partman TO partman_admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA partman GRANT SELECT ON TABLES TO partman_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA partman GRANT ALL ON TABLES TO partman_admin;
 
--- Grant partman_admin to postgres superuser (for BGW operations)
-GRANT partman_admin TO postgres;
+-- Grant partman_admin to the superuser (for BGW operations)
+-- Uses dynamic SQL to support custom POSTGRES_USER
+DO $$
+BEGIN
+    EXECUTE 'GRANT partman_admin TO ' || quote_ident(current_user);
+END
+$$;
 
 COMMIT;
 

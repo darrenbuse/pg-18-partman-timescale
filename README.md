@@ -6,8 +6,6 @@
 
 PostgreSQL 18 container with TimescaleDB and pg_partman for time-series and partitioned data workloads.
 
-> **Note:** PostgreSQL 18 is currently in development. Consider using PostgreSQL 17 for production workloads until PostgreSQL 18 is officially released.
-
 ## Overview
 
 pg-18-partman-timescale provides a ready-to-use PostgreSQL 18 image layered with:
